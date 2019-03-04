@@ -26,6 +26,40 @@ public class RecipePersistence {
     @PersistenceContext(unitName = "recipesPU")
     protected EntityManager em;
     
+    
+  
+    public RecipeEntity find(Long id) {
+        return em.find(RecipeEntity.class, id);
+    }
+    
+     /**
+     * Busca si hay alguna editorial con el nombre que se envía de argumento
+     *
+     * @param name: Nombre de la editorial que se está buscando
+     * @return null si no existe ninguna editorial con el nombre del argumento.
+     * Si existe alguna devuelve la primera.
+     */
+    public RecipeEntity findByName(String name) {
+        LOGGER.log(Level.INFO, "Consultando receta por nombre ", name);
+        // Se crea un query para buscar recetas con el nombre que recibe el método como argumento. ":name" es un placeholder que debe ser remplazado
+        TypedQuery query = em.createQuery("Select e From RecetaEntity e where e.name = :name", RecipeEntity.class);
+        // Se remplaza el placeholder ":name" con el valor del argumento 
+        query = query.setParameter("name", name);
+        // Se invoca el query se obtiene la lista resultado
+        List<RecipeEntity> sameName = query.getResultList();
+        RecipeEntity result;
+        if (sameName == null) {
+            result = null;
+        } else if (sameName.isEmpty()) {
+            result = null;
+        } else {
+            result = sameName.get(0);
+        }
+        LOGGER.log(Level.INFO, "Saliendo de consultar receta por nombre ", name);
+        return result;
+    }
+    
+    
     /**
      * Método para persisitir la entidad en la base de datos.
      *
@@ -41,11 +75,7 @@ public class RecipePersistence {
         LOGGER.log(Level.INFO, "Saliendo de crear una receta nueva");
         return recipeEntity;
     }
-  
-    public RecipeEntity find(Long id) {
-        return em.find(RecipeEntity.class, id);
-    }
     
-    //TODO método crear de recipe
+    
 
 }
