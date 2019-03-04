@@ -26,6 +26,21 @@ public class RecipePersistence {
     @PersistenceContext(unitName = "recipesPU")
     protected EntityManager em;
     
+    /**
+     * Método para persisitir la entidad en la base de datos.
+     *
+     * @param recipeEntity objeto editorial que se creará en la base de datos
+     * @return devuelve la entidad creada con un id dado por la base de datos.
+     */
+    public RecipeEntity createRecipe(RecipeEntity recipeEntity) {
+        LOGGER.log(Level.INFO, "Creando una editorial nueva");
+        /* Note que hacemos uso de un método propio de EntityManager para persistir la receta en la base de datos.
+        Es similar a "INSERT INTO table_name (column1, column2, column3, ...) VALUES (value1, value2, value3, ...);" en SQL.
+         */
+        em.persist(recipeEntity);
+        LOGGER.log(Level.INFO, "Saliendo de crear una receta nueva");
+        return recipeEntity;
+    }
   
     public RecipeEntity find(Long id) {
         return em.find(RecipeEntity.class, id);
