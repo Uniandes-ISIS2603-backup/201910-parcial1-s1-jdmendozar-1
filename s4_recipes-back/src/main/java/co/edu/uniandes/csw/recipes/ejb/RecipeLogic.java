@@ -8,7 +8,7 @@ package co.edu.uniandes.csw.recipes.ejb;
 import co.edu.uniandes.csw.recipes.entities.RecipeEntity;
 import co.edu.uniandes.csw.recipes.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.recipes.persistence.RecipePersistence;
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
+import java.util.logging.Logger;
 import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -27,7 +27,7 @@ public class RecipeLogic {
     }
 
     /**
-     * Crea una editorial en la persistencia.
+     * Crea una receta en la persistencia.
      *
      * @param recipeEntity La entidad que representa la receta a
      * persistir.
@@ -35,7 +35,7 @@ public class RecipeLogic {
      * @throws BusinessLogicException Si la receta a persistir ya existe.
      */
     public RecipeEntity createRecipe(RecipeEntity recipeEntity) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de creación de la receta");
+        //LOGGER.log(Level.INFO, "Inicia proceso de creación de la receta");
         // Verifica la regla de negocio que dice que no puede haber dos recetas con el mismo nombre
         if (persistence.findByName(recipeEntity.getName()) != null) {
             throw new BusinessLogicException("Ya existe una Receta con el nombre \"" + recipeEntity.getName() + "\"");
@@ -53,10 +53,9 @@ public class RecipeLogic {
         
         // Invoca la persistencia para crear la receta
         persistence.createRecipe(recipeEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de creación de la receta");
         return recipeEntity;
     }
-    //TODO crear el método createRecipe
+   
 
 
 }

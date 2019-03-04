@@ -67,7 +67,7 @@ public class RecipePersistence {
      * @return devuelve la entidad creada con un id dado por la base de datos.
      */
     public RecipeEntity createRecipe(RecipeEntity recipeEntity) {
-        LOGGER.log(Level.INFO, "Creando una editorial nueva");
+        LOGGER.log(Level.INFO, "Creando una receta nueva");
         /* Note que hacemos uso de un método propio de EntityManager para persistir la receta en la base de datos.
         Es similar a "INSERT INTO table_name (column1, column2, column3, ...) VALUES (value1, value2, value3, ...);" en SQL.
          */
